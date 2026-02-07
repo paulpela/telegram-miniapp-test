@@ -2,14 +2,37 @@
 <html>
 <head>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: var(--tg-theme-bg-color, #fff);
+    color: var(--tg-theme-text-color, #000);
+  }
+  pre {
+    background: var(--tg-theme-secondary-bg-color, #eee);
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+  }
+</style>
 </head>
 <body>
-<h1 id="greeting">Loading...</h1>
+<h2 id="greeting">Loading...</h2>
+<h3>All available data:</h3>
+<pre id="data"></pre>
 <script>
-const user = window.Telegram.WebApp.initDataUnsafe?.user;
+const tg = window.Telegram.WebApp;
+const user = tg.initDataUnsafe?.user;
+
 document.getElementById('greeting').textContent = 
-  user ? `Hey ${user.first_name}, it works.` : 'Hey, it works.';
-Telegram.WebApp.ready();
+  user ? `Hey ${user.first_name}` : 'Hey';
+
+document.getElementById('data').textContent = 
+  JSON.stringify(tg.initDataUnsafe, null, 2);
+
+tg.ready();
 </script>
 </body>
 </html>
